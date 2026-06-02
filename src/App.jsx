@@ -1,25 +1,21 @@
-import { FaCheckCircle } from "react-icons/fa";
+import React from "react";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import Home from "./pages/Home";
 
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen bg-slate-100 flex items-center justify-center">
-      <div className="bg-white shadow-xl rounded-2xl p-10 text-center max-w-lg">
-        <FaCheckCircle className="text-green-500 text-6xl mx-auto mb-4" />
+    <div className="min-h-screen bg-brand-gray text-brand-dark flex flex-col font-sans antialiased selection:bg-brand-blue/15 selection:text-brand-blue">
+      {/* Premium Navbar */}
+      <Navbar />
 
-        <h1 className="text-4xl font-bold text-slate-800 mb-4">
-          Company Filings
-        </h1>
+      {/* Main Content Area */}
+      <main className="flex-grow pt-20">
+        <Home />
+      </main>
 
-        <p className="text-slate-600 mb-6">
-          React + Vite + Tailwind CSS setup is working successfully.
-        </p>
-
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg transition">
-          Setup Complete
-        </button>
-      </div>
+      {/* Premium Footer */}
+      <Footer />
     </div>
   );
 }
-
-export default App;

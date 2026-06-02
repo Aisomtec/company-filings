@@ -1,3 +1,27 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Swiper Custom Active Pagination Pill Style */
+.custom-pagination .swiper-pagination-bullet-active {
+  background-color: #0077B6 !important;
+  width: 24px !important;
+  border-radius: 9999px !important;
+  opacity: 1 !important;
+}
+
+/* Smooth zoom-in/out transitions for background images */
+.swiper-zoom-container {
+  transition: transform 10000ms ease-out !important;
+}
+
+.swiper-slide-active .swiper-zoom-container {
+  transform: scale(1) !important;
+}
+
+/* Active navigation link/page state matching hover color */
+.active,
+.active-page,
+.active-link {
+  color: #0077B6 !important;
+}
