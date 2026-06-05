@@ -14,17 +14,17 @@ import {
 // ─── Data ────────────────────────────────────────────────────────────────────
 
 const quickLinks = [
-  { label: "Home", href: "#" },
-  { label: "About", href: "#about" },
-  { label: "Blogs", href: "#blogs" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Blogs", href: "/blogs" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const servicesCategories = [
-  { label: "Register a Company", href: "#services" },
-  { label: "Company filings", href: "#services" },
-  { label: "Startup", href: "#services" },
-  { label: "Accounting, Audit and Tax", href: "#services" },
+  { label: "Register a Company", href: "/#services" },
+  { label: "Company filings", href: "/#services" },
+  { label: "Startup", href: "/#services" },
+  { label: "Accounting, Audit and Tax", href: "/#services" },
 ];
 
 const contactDetails = [
@@ -101,7 +101,7 @@ export default function Footer() {
           {/* ─── Col 0: Brand Description ──────────────────────── */}
           <div className="lg:col-span-3 space-y-5">
             {/* Logo */}
-            <a href="#" className="inline-flex flex-col group focus:outline-none">
+            <a href="/" className="inline-flex flex-col group focus:outline-none">
               <span className="text-2xl font-extrabold tracking-tight uppercase leading-none">
                 <span className="text-blue-600 group-hover:text-blue-500 transition-colors">
                   Company

@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { useLocation } from "react-router-dom";
 import {
   FiMenu,
   FiX,
@@ -66,6 +67,7 @@ export default function Navbar() {
   const [activeMegaMenu, setActiveMegaMenu] = useState(false);
   const [activeMobileAccordion, setActiveMobileAccordion] = useState(null);
   const [activeSection, setActiveSection] = useState("home");
+  const location = useLocation();
 
   const megaMenuRef = useRef(null);
 
@@ -85,6 +87,19 @@ export default function Navbar() {
   // Scrollspy logic to track active page section and highlight active nav link
   useEffect(() => {
     const handleScrollspy = () => {
+      if (location.pathname !== "/") {
+        if (location.pathname === "/about") {
+          setActiveSection("about");
+        } else if (location.pathname === "/contact") {
+          setActiveSection("contact");
+        } else if (location.pathname.startsWith("/blogs")) {
+          setActiveSection("blogs");
+        } else {
+          setActiveSection("");
+        }
+        return;
+      }
+
       const sections = ["home", "about", "services", "blogs", "contact"];
       const scrollPosition = window.scrollY + 140; // safe offset
 
@@ -103,7 +118,7 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScrollspy);
     handleScrollspy();
     return () => window.removeEventListener("scroll", handleScrollspy);
-  }, []);
+  }, [location.pathname]);
 
   // Close mega menu when clicking outside on desktop
   useEffect(() => {
@@ -115,6 +130,7 @@ export default function Navbar() {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
 
   return (
     <>
@@ -128,7 +144,7 @@ export default function Navbar() {
           <div className="flex items-center justify-between">
 
             {/* Left Section: Typographic Logo & Brand Identity */}
-            <a href="#" className="flex items-center gap-2 group focus:outline-none">
+            <a href="/" className="flex items-center gap-2 group focus:outline-none">
               <div className="flex flex-col">
                 <span className="text-xl font-bold tracking-tight uppercase transition-colors duration-200">
                   <span className="text-brand-blue">Company</span>{" "}
@@ -140,7 +156,7 @@ export default function Navbar() {
             {/* Center Section: Navigation Links (Desktop) */}
             <nav className="hidden lg:flex items-center gap-8">
               <a
-                href="#"
+                href="/"
                 className={`text-[15px] font-medium transition-colors duration-200 ${
                   activeSection === "home"
                     ? "text-brand-blue active"
@@ -150,7 +166,7 @@ export default function Navbar() {
                 Home
               </a>
               <a
-                href="#about"
+                href="/about"
                 className={`text-[15px] font-medium transition-colors duration-200 ${
                   activeSection === "about"
                     ? "text-brand-blue active"
@@ -209,7 +225,7 @@ export default function Navbar() {
                               {category.items.map((item, itemIdx) => (
                                 <li key={itemIdx}>
                                   <a
-                                    href={item.href}
+                                    href="/#services"
                                     className="group flex items-center gap-1 text-[11px] font-medium text-slate-600 hover:text-brand-blue transition-colors duration-150"
                                   >
                                     <FiChevronRight className="w-2.5 h-2.5 text-slate-300 group-hover:text-brand-blue group-hover:translate-x-0.5 transition-all shrink-0" />
@@ -228,7 +244,7 @@ export default function Navbar() {
                         </span>
 
                         <a
-                          href="#consultation"
+                          href="/contact"
                           className="text-brand-blue font-bold hover:opacity-90 transition-opacity duration-150"
                         >
                           Talk to our compliance experts
@@ -240,7 +256,7 @@ export default function Navbar() {
               </div>
 
               <a
-                href="#blogs"
+                href="/blogs"
                 className={`text-[15px] font-medium transition-colors duration-200 ${
                   activeSection === "blogs"
                     ? "text-brand-blue active"
@@ -250,7 +266,7 @@ export default function Navbar() {
                 Blogs
               </a>
               <a
-                href="#contact"
+                href="/contact"
                 className={`text-[15px] font-medium transition-colors duration-200 ${
                   activeSection === "contact"
                     ? "text-brand-blue active"
@@ -264,7 +280,7 @@ export default function Navbar() {
             {/* Right Section: Contact & Primary CTA (Desktop) */}
             <div className="hidden lg:flex items-center gap-8">
               <a
-                href="#consultation"
+                href="/contact"
                 className="bg-brand-blue hover:bg-opacity-95 text-white text-[14px] font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20"
               >
                 Get Free Consultation
@@ -327,7 +343,7 @@ export default function Navbar() {
               <div className="flex-1 overflow-y-auto py-6 px-4 space-y-6">
                 <nav className="space-y-4">
                   <a
-                    href="#"
+                    href="/"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`block text-[16px] font-bold py-1 transition-colors ${
                       activeSection === "home"
@@ -338,7 +354,7 @@ export default function Navbar() {
                     Home
                   </a>
                   <a
-                    href="#about"
+                    href="/about"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`block text-[16px] font-bold py-1 transition-colors ${
                       activeSection === "about"
@@ -385,7 +401,7 @@ export default function Navbar() {
                             {servicesData.map((category, idx) => (
                               <li key={idx}>
                                 <a
-                                  href="#services"
+                                  href="/#services"
                                   onClick={() => setIsMobileMenuOpen(false)}
                                   className="group flex items-center justify-between text-[14px] font-bold text-slate-700 hover:text-brand-blue py-2 transition-colors border-b border-slate-100 last:border-0"
                                 >
@@ -401,7 +417,7 @@ export default function Navbar() {
                   </div>
 
                   <a
-                    href="#blogs"
+                    href="/blogs"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`block text-[16px] font-bold py-1 border-t border-slate-100 pt-3 transition-colors ${
                       activeSection === "blogs"
@@ -412,7 +428,7 @@ export default function Navbar() {
                     Blogs
                   </a>
                   <a
-                    href="#contact"
+                    href="/contact"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className={`block text-[16px] font-bold py-1 transition-colors ${
                       activeSection === "contact"
@@ -437,7 +453,7 @@ export default function Navbar() {
                   </a>
 
                   <a
-                    href="#consultation"
+                    href="/contact"
                     onClick={() => setIsMobileMenuOpen(false)}
                     className="block w-full text-center bg-brand-blue hover:bg-opacity-95 text-white font-semibold py-3 rounded-lg transition-all duration-200 shadow-md"
                   >

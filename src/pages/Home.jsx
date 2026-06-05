@@ -3,6 +3,7 @@ import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import HeroCarousel from "../components/HeroCarousel";
 import BlogCard from "../components/BlogCard";
+import { blogData } from "../data/blogData";
 import {
   FiShield,
   FiCheckCircle,
@@ -222,35 +223,7 @@ const faqData = [
   }
 ];
 
-const blogsData = [
-  {
-    title: "Steps to Register a Private Limited Company",
-    category: "Registration",
-    excerpt: "A comprehensive step-by-step guide to incorporating your Private Limited company including name approval, digital signatures, and SPICe+ form submissions.",
-    date: "May 28, 2026",
-    isoDate: "2026-05-28",
-    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=600&q=80",
-    href: "#blog-1"
-  },
-  {
-    title: "Annual ROC Filing Requirements Explained",
-    category: "Compliance",
-    excerpt: "Stay compliant and avoid penalties. Understand mandatory forms, ROC deadlines, statutory audits, and board meetings required for your company.",
-    date: "May 24, 2026",
-    isoDate: "2026-05-24",
-    image: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=600&q=80",
-    href: "#blog-2"
-  },
-  {
-    title: "Startup India Registration Benefits",
-    category: "Startup",
-    excerpt: "Unlock tax holidays, self-certifications, government procurement advantages, and patent rebates by securing Startup India recognition.",
-    date: "May 15, 2026",
-    isoDate: "2026-05-15",
-    image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=600&q=80",
-    href: "#blog-3"
-  }
-];
+// Centralized blogs list loaded from blogData.js
 
 export default function Home() {
   const [openFaqIdx, setOpenFaqIdx] = React.useState(null);
@@ -842,7 +815,7 @@ export default function Home() {
             }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {blogsData.map((blog, index) => (
+            {blogData.map((blog, index) => (
               <motion.div
                 key={index}
                 variants={{
@@ -850,7 +823,15 @@ export default function Home() {
                   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
                 }}
               >
-                <BlogCard {...blog} />
+                <BlogCard
+                  category={blog.category}
+                  title={blog.title}
+                  excerpt={blog.excerpt}
+                  date={blog.publishDate}
+                  isoDate={blog.publishDate}
+                  image={blog.featuredImage}
+                  href={`/blogs/${blog.slug}`}
+                />
               </motion.div>
             ))}
           </motion.div>
@@ -858,7 +839,7 @@ export default function Home() {
           {/* Bottom CTA */}
           <div className="text-center mt-12">
             <a
-              href="#blogs"
+              href="/blogs"
               className="inline-flex items-center gap-1.5 px-6 py-3 bg-white border border-slate-200 text-brand-blue hover:bg-brand-blue hover:text-white hover:border-brand-blue rounded-lg text-sm font-bold shadow-sm transition-all duration-300 hover:scale-[1.02]"
             >
               <span>View All Blogs</span>

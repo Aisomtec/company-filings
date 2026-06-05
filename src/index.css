@@ -25,3 +25,8 @@
 .active-link {
   color: #0077B6 !important;
 }
+
+/* Global Text Justification for all standard paragraph body copy */
+p {
+  text-align: justify;
+}
