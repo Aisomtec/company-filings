@@ -1,5 +1,6 @@
 import React from "react";
 import { Swiper, SwiperSlide, useSwiperSlide } from "swiper/react";
+import { useImages } from "../context/ImageContext";
 import { Navigation, Autoplay, EffectFade } from "swiper/modules";
 import { motion } from "framer-motion";
 import {
@@ -28,7 +29,7 @@ const slidesData = [
     primaryBtn: { text: "Get Started", href: "#consultation" },
     secondaryBtn: { text: "View Filing Services", href: "#services" },
     trustHighlights: ["ROC Experts", "Compliance Focused", "Dedicated Support"],
-    bgImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=80"
+    bgImage: "/hero.avif"
   },
   {
     id: 3,
@@ -39,7 +40,7 @@ const slidesData = [
     primaryBtn: { text: "Speak with an Expert", href: "#consultation" },
     secondaryBtn: { text: "Explore Startup Services", href: "#services" },
     trustHighlights: ["Startup Focused", "Investor Ready Guidance", "Long-Term Advisory"],
-    bgImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=80"
+    bgImage: "/hero1.avif"
   },
   {
     id: 4,
@@ -50,7 +51,7 @@ const slidesData = [
     primaryBtn: { text: "Request Consultation", href: "#consultation" },
     secondaryBtn: { text: "View Tax Services", href: "#services" },
     trustHighlights: ["Qualified Experts", "Audit Ready", "End-to-End Compliance"],
-    bgImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=2000&q=80"
+    bgImage: "/hero2.avif"
   }
 ];
 
@@ -124,7 +125,7 @@ function SlideContent({ slide }) {
             className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2"
           >
             <a
-              href={slide.primaryBtn.href}
+              href="/contact"
               className="bg-brand-blue hover:bg-opacity-90 text-white font-bold text-center px-6 py-3 rounded-lg shadow-lg hover:shadow-brand-blue/20 transition-all duration-300 transform hover:scale-[1.01]"
             >
               {slide.primaryBtn.text}
@@ -157,6 +158,20 @@ function SlideContent({ slide }) {
 }
 
 export default function HeroCarousel() {
+  const { getImageUrl } = useImages();
+
+  const mappedSlides = slidesData.map(slide => {
+    let locationKey = "";
+    if (slide.id === 2) locationKey = "Home Page Hero Slide 1 Background";
+    else if (slide.id === 3) locationKey = "Home Page Hero Slide 2 Background";
+    else if (slide.id === 4) locationKey = "Home Page Hero Slide 3 Background";
+
+    return {
+      ...slide,
+      bgImage: locationKey ? getImageUrl(locationKey, slide.bgImage) : slide.bgImage
+    };
+  });
+
   return (
     <section id="home" className="relative w-full overflow-hidden bg-brand-dark">
       <Swiper
@@ -175,7 +190,7 @@ export default function HeroCarousel() {
         
         className="w-full h-full"
       >
-        {slidesData.map((slide) => (
+        {mappedSlides.map((slide) => (
           <SwiperSlide key={slide.id}>
             <div className="relative w-full min-h-[550px] py-20 sm:py-24 md:py-0 md:h-[70vh] lg:h-[85vh] flex items-center overflow-hidden">
               {/* Zoom background effect */}

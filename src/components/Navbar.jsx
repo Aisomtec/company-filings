@@ -7,6 +7,7 @@ import {
   FiChevronRight
 } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
+import { useConsultation } from "../context/ConsultationContext";
 
 // High-fidelity structured services data mapping all 29 sub-services
 const servicesData = [
@@ -68,6 +69,7 @@ export default function Navbar() {
   const [activeMobileAccordion, setActiveMobileAccordion] = useState(null);
   const [activeSection, setActiveSection] = useState("home");
   const location = useLocation();
+  const { openModal } = useConsultation();
 
   const megaMenuRef = useRef(null);
 
@@ -84,40 +86,19 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Scrollspy logic to track active page section and highlight active nav link
+  // Update active page section based on path
   useEffect(() => {
-    const handleScrollspy = () => {
-      if (location.pathname !== "/") {
-        if (location.pathname === "/about") {
-          setActiveSection("about");
-        } else if (location.pathname === "/contact") {
-          setActiveSection("contact");
-        } else if (location.pathname.startsWith("/blogs")) {
-          setActiveSection("blogs");
-        } else {
-          setActiveSection("");
-        }
-        return;
-      }
-
-      const sections = ["home", "about", "services", "blogs", "contact"];
-      const scrollPosition = window.scrollY + 140; // safe offset
-
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-            break;
-          }
-        }
-      }
-    };
-    window.addEventListener("scroll", handleScrollspy);
-    handleScrollspy();
-    return () => window.removeEventListener("scroll", handleScrollspy);
+    if (location.pathname === "/") {
+      setActiveSection("home");
+    } else if (location.pathname === "/about") {
+      setActiveSection("about");
+    } else if (location.pathname === "/contact") {
+      setActiveSection("contact");
+    } else if (location.pathname.startsWith("/blogs")) {
+      setActiveSection("blogs");
+    } else {
+      setActiveSection("");
+    }
   }, [location.pathname]);
 
   // Close mega menu when clicking outside on desktop
@@ -279,12 +260,12 @@ export default function Navbar() {
 
             {/* Right Section: Contact & Primary CTA (Desktop) */}
             <div className="hidden lg:flex items-center gap-8">
-              <a
-                href="/contact"
+              <button
+                onClick={() => openModal()}
                 className="bg-brand-blue hover:bg-opacity-95 text-white text-[14px] font-semibold px-5 py-2.5 rounded-lg transition-all duration-200 shadow-sm focus:outline-none focus:ring-2 focus:ring-brand-blue/20"
               >
                 Get Free Consultation
-              </a>
+              </button>
             </div>
 
             {/* Hamburger Button (Mobile) */}
@@ -452,13 +433,15 @@ export default function Navbar() {
                     </span>
                   </a>
 
-                  <a
-                    href="/contact"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      openModal();
+                    }}
                     className="block w-full text-center bg-brand-blue hover:bg-opacity-95 text-white font-semibold py-3 rounded-lg transition-all duration-200 shadow-md"
                   >
                     Get Free Consultation
-                  </a>
+                  </button>
                 </div>
               </div>
             </motion.div>

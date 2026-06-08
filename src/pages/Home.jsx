@@ -1,6 +1,7 @@
 import React from "react";
 import CountUp from "react-countup";
 import { motion } from "framer-motion";
+import { useImages } from "../context/ImageContext";
 import HeroCarousel from "../components/HeroCarousel";
 import BlogCard from "../components/BlogCard";
 import { blogData } from "../data/blogData";
@@ -176,25 +177,7 @@ const testimonialsData = [
     initials: "VM",
     content: "LLP setup and subsequent compliance filings were executed flawlessly. Clear pricing, dedicated account managers, and no hidden surprises."
   },
-  {
-    name: "Priya Nair",
-    role: "E-commerce Business",
-    initials: "PN",
-    content: "Managing GST audits and monthly filings was a headache until we hired them. Highly responsive team of professionals who explain everything clearly."
-  },
-  {
-    name: "Rajesh Patel",
-    role: "Consulting Firm",
-    initials: "RP",
-    content: "Excellent corporate advisory services. They set up our capital structure and drafted shareholder agreements with extreme precision."
-  },
-  {
-    name: "Sanjay Singhania",
-    role: "Manufacturer",
-    initials: "SS",
-    content: "End-to-end statutory and taxation support. Our statutory compliance is always completed ahead of the deadlines. Highly recommended!"
-  }
-];
+ ];
 
 const faqData = [
   {
@@ -226,6 +209,7 @@ const faqData = [
 // Centralized blogs list loaded from blogData.js
 
 export default function Home() {
+  const { getImageUrl } = useImages();
   const [openFaqIdx, setOpenFaqIdx] = React.useState(null);
 
   return (
@@ -262,12 +246,12 @@ export default function Home() {
 
             {/* Stat 3 */}
             <div className="group flex flex-col items-center hover:scale-[1.03] transition-transform duration-300 ease-out cursor-default">
-              <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-blue tracking-tight hover:text-slate-700 transition-colors duration-300">
-                <CountUpComponent end={98} enableScrollSpy={true} scrollSpyOnce={true} duration={2.5} />
-                <span className="text-brand-blue font-extrabold">%</span>
+              <span className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-brand-blue tracking-tight hover:text-slate-700 transition-colors duration-300 flex items-center gap-1">
+                <span>5 </span>
+                <span className="">★</span>
               </span>
               <span className="mt-2 text-xs sm:text-sm font-semibold uppercase tracking-wider text-slate-500">
-                Client Satisfaction
+                Client Ratings
               </span>
             </div>
 
@@ -358,10 +342,10 @@ export default function Home() {
       </section>
 
       {/* FEATURED SERVICES SECTION */}
-      <section id="featured-services" className="py-12 md:py-14 bg-white border-b border-slate-100">
+      {/* <section id="featured-services" className="py-12 md:py-14 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Section Header */}
+          
           <div className="text-center max-w-3xl mx-auto space-y-4 mb-10">
             <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue block">
               Popular Services
@@ -374,7 +358,7 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Cards Grid with premium stagger entries */}
+         
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -396,12 +380,10 @@ export default function Home() {
                   className="group bg-slate-50 border border-slate-200/60 rounded-2xl p-6 shadow-sm hover:shadow-lg hover:bg-white hover:border-brand-blue/30 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between"
                 >
                   <div className="space-y-4">
-                    {/* Icon container with bounce hover effect */}
                     <div className="w-12 h-12 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-brand-blue shadow-sm transition-all duration-300 group-hover:bg-brand-blue group-hover:text-white group-hover:border-brand-blue group-hover:scale-105">
                       <IconComponent className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
                     </div>
 
-                    {/* Title & Description */}
                     <div className="space-y-2">
                       <h3 className="text-lg font-bold text-brand-dark group-hover:text-brand-blue transition-colors duration-250">
                         {service.title}
@@ -412,7 +394,6 @@ export default function Home() {
                     </div>
                   </div>
 
-                  {/* Learn More CTA */}
                   <div className="pt-6 mt-6 border-t border-slate-200/40">
                     <a
                       href={service.href}
@@ -428,7 +409,7 @@ export default function Home() {
           </motion.div>
 
         </div>
-      </section>
+      </section> */}
 
       {/* WHY CHOOSE US SECTION */}
       <section id="why-choose-us" className="py-12 md:py-14 bg-white border-b border-slate-100 overflow-hidden">
@@ -446,7 +427,7 @@ export default function Home() {
               {/* Decorative Frame */}
               <div className="absolute inset-0 bg-brand-blue/5 rounded-2xl -rotate-2 transform scale-105 z-0" />
               <img 
-                src="https://images.unsplash.com/photo-1554415707-6e8cfc93fe23?auto=format&fit=crop&w=1000&q=80" 
+                src={getImageUrl("Home Page Core Expertise Section", "/expertise.avif")} 
                 alt="Corporate Compliance Documentation Workspace" 
                 className="relative w-full h-[460px] object-cover rounded-2xl shadow-md border border-slate-200 z-10"
               />
@@ -510,7 +491,7 @@ export default function Home() {
           {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto space-y-4 mb-10">
             <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue block">
-              How It Works
+              How We Work
             </span>
             <h3 className="text-3xl font-extrabold text-brand-dark">
               Simple Process. Professional Execution.
@@ -580,72 +561,7 @@ export default function Home() {
       </section>
 
       {/* STATISTICS & ACHIEVEMENTS SECTION */}
-      <section id="statistics" className="py-16 md:py-18 bg-brand-dark text-white relative overflow-hidden">
-        {/* Subtle decorative background glow */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-brand-blue/10 rounded-full blur-[120px] pointer-events-none z-0" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-
-          {/* Section Header */}
-          <div className="text-center max-w-3xl mx-auto space-y-4 mb-12">
-            <span className="text-xs font-extrabold uppercase tracking-widest text-sky-400 block">
-              Our Impact
-            </span>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-white leading-tight">
-              Helping Businesses Stay Compliant and Grow
-            </h2>
-          </div>
-
-          {/* Statistics Grid */}
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16 text-center">
-
-            {/* Stat 1 */}
-            <div className="group flex flex-col items-center hover:scale-[1.03] transition-transform duration-300 ease-out cursor-default">
-              <span className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white transition-colors duration-300">
-                <CountUpComponent end={500} enableScrollSpy={true} scrollSpyOnce={true} duration={2.5} />
-                <span className="text-sky-400 font-extrabold">+</span>
-              </span>
-              <span className="mt-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-400 max-w-[200px]">
-                Companies Registered
-              </span>
-            </div>
-
-            {/* Stat 2 */}
-            <div className="group flex flex-col items-center hover:scale-[1.03] transition-transform duration-300 ease-out cursor-default">
-              <span className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white transition-colors duration-300">
-                <CountUpComponent end={1000} enableScrollSpy={true} scrollSpyOnce={true} duration={2.5} />
-                <span className="text-sky-400 font-extrabold">+</span>
-              </span>
-              <span className="mt-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-400 max-w-[200px]">
-                Compliance Filings Completed
-              </span>
-            </div>
-
-            {/* Stat 3 */}
-            <div className="group flex flex-col items-center hover:scale-[1.03] transition-transform duration-300 ease-out cursor-default">
-              <span className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white transition-colors duration-300">
-                <CountUpComponent end={98} enableScrollSpy={true} scrollSpyOnce={true} duration={2.5} />
-                <span className="text-sky-400 font-extrabold">%</span>
-              </span>
-              <span className="mt-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-400 max-w-[200px]">
-                Client Satisfaction
-              </span>
-            </div>
-
-            {/* Stat 4 */}
-            <div className="group flex flex-col items-center hover:scale-[1.03] transition-transform duration-300 ease-out cursor-default">
-              <span className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight text-white transition-colors duration-300">
-                <CountUpComponent end={10} enableScrollSpy={true} scrollSpyOnce={true} duration={2.5} />
-                <span className="text-sky-400 font-extrabold">+</span>
-              </span>
-              <span className="mt-4 text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-400 max-w-[200px]">
-                Years Industry Experience
-              </span>
-            </div>
-
-          </div>
-        </div>
-      </section>
+    
 
       {/* ABOUT US SECTION */}
       <section id="about" className="py-12 md:py-14 bg-white border-y border-slate-100">
@@ -685,7 +601,7 @@ export default function Home() {
               <div className="space-y-2 p-4 bg-white border border-slate-100 rounded-xl shadow-sm">
                 <FiUsers className="w-6 h-6 text-brand-blue mx-auto" />
                 <div className="text-3xl font-extrabold text-brand-dark">100%</div>
-                <div className="text-xs font-bold text-slate-400 uppercase tracking-wide">CA & CS In-House Staff</div>
+                <div className="text-xs font-bold text-slate-400 uppercase tracking-wide">CS In-House Staff</div>
               </div>
 
               <div className="space-y-2 p-4 bg-white border border-slate-100 rounded-xl shadow-sm">
@@ -789,10 +705,9 @@ export default function Home() {
       </section>
 
       {/* LATEST INSIGHTS (BLOGS) */}
-      <section id="blogs" className="py-12 md:py-14 bg-brand-gray border-b border-slate-100">
+      {/* <section id="blogs" className="py-12 md:py-14 bg-brand-gray border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-          {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto space-y-4 mb-10">
             <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue block">
               Latest Insights
@@ -805,7 +720,6 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Blog Cards Grid with stagger entries */}
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -836,7 +750,6 @@ export default function Home() {
             ))}
           </motion.div>
 
-          {/* Bottom CTA */}
           <div className="text-center mt-12">
             <a
               href="/blogs"
@@ -848,7 +761,7 @@ export default function Home() {
           </div>
 
         </div>
-      </section>
+      </section> */}
 
       {/* FAQ PREVIEW SECTION */}
       <section id="faq" className="py-12 md:py-14 bg-white border-b border-slate-100">

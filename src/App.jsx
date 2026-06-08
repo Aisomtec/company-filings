@@ -7,6 +7,14 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Blogs from "./pages/Blogs";
 import BlogDetail from "./pages/BlogDetail";
+import ConsultationModal from "./components/ConsultationModal";
+import { ConsultationProvider } from "./context/ConsultationContext";
+
+// Admin Panel Components
+import AdminLayout from "./pages/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import AdminBlogs from "./pages/admin/AdminBlogs";
+import AdminUsers from "./pages/admin/AdminUsers";
 
 
 // Scroll Restoration and Hash Navigation Specialist component
@@ -33,6 +41,27 @@ function ScrollToTop() {
 }
 
 function MainApp() {
+  const location = useLocation();
+  
+  // Intercept all routes starting with /admin to bypass public site layout
+  const isAdminPath = location.pathname.startsWith("/admin");
+
+  if (isAdminPath) {
+    return (
+      <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased">
+        <ScrollToTop />
+        <Routes>
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="blogs" element={<AdminBlogs />} />
+            <Route path="users" element={<AdminUsers />} />
+          </Route>
+        </Routes>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-brand-gray text-brand-dark flex flex-col font-sans antialiased selection:bg-brand-blue/15 selection:text-brand-blue">
       <ScrollToTop />
@@ -53,14 +82,23 @@ function MainApp() {
 
       {/* Premium Footer */}
       <Footer />
+
+      {/* Consultation Request Popup Modal */}
+      <ConsultationModal />
     </div>
   );
 }
 
+import { ImageProvider } from "./context/ImageContext";
+
 export default function App() {
   return (
     <Router>
-      <MainApp />
+      <ImageProvider>
+        <ConsultationProvider>
+          <MainApp />
+        </ConsultationProvider>
+      </ImageProvider>
     </Router>
   );
 }

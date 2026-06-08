@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useImages } from "../context/ImageContext";
 import {
   FiShield,
   FiCheckCircle,
@@ -23,6 +24,7 @@ import {
 } from "react-icons/fi";
 
 export default function About() {
+  const { getImageUrl } = useImages();
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -123,7 +125,7 @@ export default function About() {
     {
       step: "03",
       title: "Execute Documentation",
-      description: "Our in-house CA and CS professionals draft precise SPICe+ applications, board resolutions, MOAs, and AOAs.",
+      description: "Our in-house CS professionals draft precise SPICe+ applications, board resolutions, MOAs, and AOAs.",
     },
     {
       step: "04",
@@ -144,7 +146,7 @@ export default function About() {
         {/* Background Image with overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1920&q=80"
+            src={getImageUrl("About Page Hero Background", "/about-hero.avif")}
             alt="Corporate boardroom"
             className="w-full h-full object-cover"
           />
@@ -179,7 +181,7 @@ export default function About() {
             >
               <div className="absolute inset-0 bg-brand-blue/5 rounded-2xl rotate-2 transform scale-105 z-0" />
               <img
-                src="https://images.unsplash.com/photo-1606857521015-7f9fcf423740?auto=format&fit=crop&w=1000&q=80"
+                src={getImageUrl("About Page Corporate Overview Section", "/overview.avif")}
                 alt="Professional Business Compliance Consultation Boardroom"
                 className="relative w-full h-[380px] sm:h-[460px] object-cover rounded-2xl shadow-lg border border-slate-100 z-10 transition-transform duration-500 hover:scale-[1.01]"
               />
@@ -396,7 +398,7 @@ export default function About() {
             >
               <div className="absolute inset-0 bg-brand-blue/5 rounded-2xl -rotate-2 transform scale-105 z-0" />
               <img
-                src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80"
+                src={getImageUrl("About Page Company Advantage Section", "/advantage.avif")}
                 alt="Corporate Skyscraper Workspace representing stability and trust"
                 className="relative w-full h-[460px] object-cover rounded-2xl shadow-md border border-slate-200 z-10 transition-transform duration-500 hover:scale-[1.01]"
               />
@@ -532,7 +534,7 @@ export default function About() {
             </p>
 
             <div className="pt-4 border-t border-slate-200 max-w-xs mx-auto">
-              <span className="block font-bold text-brand-dark text-sm">Pranav Singhania & CA Rohan Mehta</span>
+              <span className="block font-bold text-brand-dark text-sm">Ankit Parekh</span>
               <span className="block text-[11px] text-slate-400 font-semibold uppercase tracking-wider mt-0.5">Founders, Company Filings</span>
               
               {/* Premium Handwritten SVG Signature Representation */}
@@ -573,7 +575,7 @@ export default function About() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <a
-              href="/#contact"
+              href="/contact"
               className="w-full sm:w-auto inline-flex items-center justify-center bg-brand-blue hover:bg-opacity-95 text-white font-bold px-6 py-3.5 rounded-lg transition-all duration-200 shadow-md hover:scale-[1.02]"
             >
               Get Free Consultation

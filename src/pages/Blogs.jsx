@@ -1,10 +1,34 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { motion } from "framer-motion";
 import { FiArrowRight } from "react-icons/fi";
+import { useImages } from "../context/ImageContext";
 import { blogData } from "../data/blogData";
 import BlogCard from "../components/BlogCard";
 
+import { API_BASE_URL } from "../config";
+
 export default function Blogs() {
+  const { getImageUrl } = useImages();
+  const [blogs, setBlogs] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    axios.get(`${API_BASE_URL}/blogs.php`)
+      .then((res) => {
+        // Only show published articles on the public page
+        const published = (res.data || []).filter(b => b.status === "published");
+        setBlogs(published);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.warn("Failed to fetch dynamic blogs from API, loading static fallback:", err);
+        setBlogs(blogData); // Fallback to hardcoded dataset
+        setLoading(false);
+      });
+  }, []);
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -24,56 +48,28 @@ export default function Blogs() {
     <div className="font-sans antialiased text-brand-dark bg-brand-gray">
       {/* ─── SECTION 1: Blogs Hero Section ────────────────────────────── */}
       <section className="relative overflow-hidden py-24 md:py-32 bg-brand-dark text-white border-b border-slate-800">
-        {/* Background Image with overlay */}
-        <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80"
-            alt="Corporate Business Intelligence Technology Network"
-            className="w-full h-full object-cover"
-          />
-          {/* Overlay shade */}
-          <div className="absolute inset-0 bg-slate-950/80 z-10" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-center space-y-6">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="space-y-4"
-          >
-            <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue bg-brand-blue/10 px-3 py-1.5 rounded-full border border-brand-blue/20 inline-block">
-              Knowledge Center
-            </span>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white leading-tight max-w-4xl mx-auto">
-              Business Compliance Insights & Resources
-            </h1>
-            <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl mx-auto">
-              Explore expert guidance on company registration, ROC filings, startup compliance, accounting, and taxation. Stay informed and run your business default-free.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-2"
-          >
-            <a
-              href="#articles-grid"
-              className="w-full sm:w-auto inline-flex items-center justify-center bg-brand-blue hover:bg-opacity-95 text-white font-bold px-6 py-3.5 rounded-lg transition-all duration-200 shadow-md hover:scale-[1.02]"
-            >
-              Browse Articles
-            </a>
-            <a
-              href="/contact"
-              className="w-full sm:w-auto inline-flex items-center justify-center bg-transparent border border-white/20 hover:bg-white/5 text-white font-bold px-6 py-3.5 rounded-lg transition-all duration-200 hover:scale-[1.02]"
-            >
-              Contact Experts
-            </a>
-          </motion.div>
-        </div>
-      </section>
+              {/* Background Image with overlay */}
+              <div className="absolute inset-0 z-0">
+                <img
+                  src={getImageUrl("Blogs Listing Hero Background", "/blogs-hero.avif")}
+                  alt="Corporate boardroom"
+                  className="w-full h-full object-cover"
+                />
+                {/* Overlay shade */}
+                <div className="absolute inset-0 bg-slate-950/75 z-10" />
+              </div>
+      
+              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-20 text-center">
+                <motion.h1
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-widest uppercase"
+                >
+                  Knowledge Center
+                </motion.h1>
+              </div>
+            </section>
 
       {/* ─── SECTION 2: Featured Blogs Grid ───────────────────────────── */}
       <section id="articles-grid" className="py-16 md:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -92,27 +88,34 @@ export default function Blogs() {
           </div>
 
           {/* Grid Layout */}
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-60px" }}
-            variants={containerVariants}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {blogData.map((blog) => (
-              <motion.div key={blog.id} variants={itemVariants}>
-                <BlogCard
-                  category={blog.category}
-                  title={blog.title}
-                  excerpt={blog.excerpt}
-                  date={blog.publishDate}
-                  isoDate={blog.publishDate}
-                  image={blog.featuredImage}
-                  href={`/blogs/${blog.slug}`}
-                />
-              </motion.div>
-            ))}
-          </motion.div>
+          {loading ? (
+            <div className="flex flex-col items-center justify-center py-20 space-y-3">
+              <div className="w-8 h-8 border-4 border-brand-blue border-t-transparent rounded-full animate-spin" />
+              <span className="text-xs font-semibold text-slate-400">Loading publications library...</span>
+            </div>
+          ) : (
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-60px" }}
+              variants={containerVariants}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {blogs.map((blog) => (
+                <motion.div key={blog.id || blog.slug} variants={itemVariants}>
+                  <BlogCard
+                    category={blog.category}
+                    title={blog.title}
+                    excerpt={blog.excerpt}
+                    date={blog.publishDate}
+                    isoDate={blog.publishDate}
+                    image={blog.featuredImage}
+                    href={`/blogs/${blog.slug}`}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
         </div>
       </section>
 

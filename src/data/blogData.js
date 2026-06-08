@@ -6,8 +6,8 @@ export const blogData = [
     category: "Company Registration",
     excerpt: "A comprehensive step-by-step guide to incorporating your Private Limited company in India, including name approval, digital signatures, SPICe+ form submissions, and post-incorporation setup.",
     publishDate: "May 28, 2026",
-    featuredImage: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1200&q=80",
-    author: "CA Rohan Mehta",
+    featuredImage: "/blog-img1.avif",
+    author: " Rohan Mehta",
     readingTime: "8 min read",
     seoTitle: "How to Register a Private Limited Company in India - Step-by-Step Guide",
     seoDescription: "Learn how to register a Private Limited (Pvt Ltd) Company in India. A complete guide on eligibility, required documents, MCA SPICe+ process, and compliance steps.",
@@ -27,7 +27,7 @@ export const blogData = [
       {
         type: "quote",
         text: "A Private Limited Company has a perpetual succession, meaning the business continues to exist legally even if directors or shareholders change, transfer shares, or pass away.",
-        author: "Pranav Singhania, Co-Founder"
+        author: "Ankit Parekh, Co-Founder"
       },
       {
         type: "heading2",
@@ -159,8 +159,8 @@ export const blogData = [
     category: "Company Filings",
     excerpt: "An in-depth guide on mandatory annual compliance, ROC filings, important e-forms like AOC-4 and MGT-7, deadlines, and the cost of non-compliance for Indian companies.",
     publishDate: "May 24, 2026",
-    featuredImage: "image.jpg",
-    author: "Pranav Singhania",
+    featuredImage: "/image.jpg",
+    author: "Ankit Parekh",
     readingTime: "10 min read",
     seoTitle: "Annual ROC Filing Requirements & Deadlines for Indian Companies",
     seoDescription: "Understand the annual ROC filing requirements for Private Limited Companies. Learn about AOC-4, MGT-7, deadlines, penalties, and best compliance practices.",
@@ -284,8 +284,8 @@ export const blogData = [
     category: "Startup Services",
     excerpt: "Learn how the Startup India Scheme benefits early-stage ventures. Discover eligibility criteria, 3-year tax exemptions, patent cost rebates, funding options, and the application process.",
     publishDate: "May 15, 2026",
-    featuredImage: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=1200&q=80",
-    author: "CA Rohan Mehta",
+    featuredImage: "/blog-img3.avif",
+    author: " Rohan Mehta",
     readingTime: "7 min read",
     seoTitle: "Startup India Registration Benefits, Eligibility & Application",
     seoDescription: "Unlock tax holidays, patent rebates, and easy compliance by securing Startup India recognition. Explore the complete guide on eligibility and application steps.",

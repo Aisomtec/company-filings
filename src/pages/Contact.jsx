@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useImages } from "../context/ImageContext";
 import {
   FiPhone,
   FiMail,
@@ -19,6 +20,7 @@ import {
 } from "react-icons/fi";
 
 export default function Contact() {
+  const { getImageUrl } = useImages();
   // Form State for API-readiness
   const [formData, setFormData] = useState({
     fullName: "",
@@ -268,7 +270,7 @@ export default function Contact() {
         {/* Background Image with overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80"
+            src={getImageUrl("Contact Page Hero Background", "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1920&q=80")}
             alt="Corporate skyscraper"
             className="w-full h-full object-cover"
           />
@@ -345,218 +347,6 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* ─── SECTION 3: Inquiry Form ─────────────────────────────────── */}
-      <section id="inquiry-form" className="py-10 md:py-12 bg-white scroll-mt-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left Side: Headings + Business Image */}
-            <div className="lg:col-span-5 space-y-8">
-              <div className="space-y-4">
-                <span className="text-xs font-extrabold uppercase tracking-widest text-brand-blue block">
-                  Get Connected
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-brand-dark leading-tight">
-                  Send Us Your Requirements
-                </h2>
-                <p className="text-slate-500 text-sm leading-relaxed">
-                  Tell us about your registration, compliance or taxation needs. Our senior corporate secretaries or tax consultants will analyze your inputs and get in touch with you.
-                </p>
-              </div>
-
-              {/* Professional Business Consultation Image */}
-              <div className="relative">
-                <div className="absolute inset-0 bg-brand-blue/5 rounded-2xl rotate-2 transform scale-105 z-0 animate-pulse" />
-                <img
-                  src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1000&q=80"
-                  alt="Business planning and corporate filing consultation workspace"
-                  className="relative w-full h-[320px] object-cover rounded-2xl shadow-md border border-slate-200 z-10 hover:scale-[1.01] transition-transform duration-300"
-                />
-              </div>
-            </div>
-
-            {/* Right Side: Professional Inquiry Form Card */}
-            <div className="lg:col-span-7 bg-brand-gray border border-slate-200/80 rounded-2xl p-6 md:p-8 shadow-sm">
-              
-              {/* Submission Status Alerts */}
-              <AnimatePresence>
-                {submitSuccess && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="mb-6 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-xl text-sm font-semibold flex items-start gap-2.5"
-                  >
-                    <FiCheckCircle className="w-5 h-5 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-bold">Consultation Request Received!</p>
-                      <p className="font-medium text-xs mt-0.5 text-emerald-700">Thank you. An expert advisor will call you within 2 business hours.</p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-
-              <form onSubmit={handleSubmit} className="space-y-5">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {/* Full Name */}
-                  <div className="space-y-1.5">
-                    <label htmlFor="fullName" className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                      Full Name
-                    </label>
-                    <input
-                      type="text"
-                      id="fullName"
-                      name="fullName"
-                      value={formData.fullName}
-                      onChange={handleInputChange}
-                      placeholder="e.g. Rahul Sharma"
-                      className={`w-full bg-white border ${
-                        errors.fullName ? "border-rose-500 focus:ring-rose-200" : "border-slate-200 focus:ring-brand-blue/20"
-                      } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:border-brand-blue transition-all duration-200`}
-                    />
-                    {errors.fullName && <p className="text-rose-500 text-xs font-semibold">{errors.fullName}</p>}
-                  </div>
-
-                  {/* Phone Number */}
-                  <div className="space-y-1.5">
-                    <label htmlFor="phoneNumber" className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                      Phone Number
-                    </label>
-                    <input
-                      type="tel"
-                      id="phoneNumber"
-                      name="phoneNumber"
-                      value={formData.phoneNumber}
-                      onChange={handleInputChange}
-                      placeholder="e.g. +91 98765 43210"
-                      className={`w-full bg-white border ${
-                        errors.phoneNumber ? "border-rose-500 focus:ring-rose-200" : "border-slate-200 focus:ring-brand-blue/20"
-                      } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:border-brand-blue transition-all duration-200`}
-                    />
-                    {errors.phoneNumber && <p className="text-rose-500 text-xs font-semibold">{errors.phoneNumber}</p>}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {/* Email Address */}
-                  <div className="space-y-1.5 sm:col-span-2">
-                    <label htmlFor="emailAddress" className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                      Email Address
-                    </label>
-                    <input
-                      type="email"
-                      id="emailAddress"
-                      name="emailAddress"
-                      value={formData.emailAddress}
-                      onChange={handleInputChange}
-                      placeholder="e.g. corporate@company.com"
-                      className={`w-full bg-white border ${
-                        errors.emailAddress ? "border-rose-500 focus:ring-rose-200" : "border-slate-200 focus:ring-brand-blue/20"
-                      } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:border-brand-blue transition-all duration-200`}
-                    />
-                    {errors.emailAddress && <p className="text-rose-500 text-xs font-semibold">{errors.emailAddress}</p>}
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                  {/* Service Category */}
-                  <div className="space-y-1.5">
-                    <label htmlFor="serviceCategory" className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                      Service Category
-                    </label>
-                    <select
-                      id="serviceCategory"
-                      name="serviceCategory"
-                      value={formData.serviceCategory}
-                      onChange={handleInputChange}
-                      className={`w-full bg-white border ${
-                        errors.serviceCategory ? "border-rose-500 focus:ring-rose-200" : "border-slate-200 focus:ring-brand-blue/20"
-                      } text-brand-dark text-sm rounded-lg px-3 py-3 focus:outline-none focus:ring-2 focus:border-brand-blue transition-all duration-200`}
-                    >
-                      <option value="">Select a category</option>
-                      <option value="Company Registration">Company Registration</option>
-                      <option value="Company Filings">Company Filings</option>
-                      <option value="Startup Services">Startup Services</option>
-                      <option value="Accounting & Tax Services">Accounting & Tax Services</option>
-                    </select>
-                    {errors.serviceCategory && <p className="text-rose-500 text-xs font-semibold">{errors.serviceCategory}</p>}
-                  </div>
-
-                  {/* Sub Service Detail Dropdown */}
-                  <div className="space-y-1.5">
-                    <label htmlFor="subService" className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                      Specific Service
-                    </label>
-                    <select
-                      id="subService"
-                      name="subService"
-                      value={formData.subService}
-                      onChange={handleInputChange}
-                      disabled={!formData.serviceCategory}
-                      className={`w-full bg-white border ${
-                        errors.subService ? "border-rose-500 focus:ring-rose-200" : "border-slate-200 focus:ring-brand-blue/20"
-                      } text-brand-dark text-sm rounded-lg px-3 py-3 focus:outline-none focus:ring-2 focus:border-brand-blue transition-all duration-200 disabled:bg-slate-100 disabled:text-slate-400 disabled:cursor-not-allowed`}
-                    >
-                      <option value="">
-                        {!formData.serviceCategory ? "Select a category first" : "Select a specific service"}
-                      </option>
-                      {formData.serviceCategory &&
-                        servicesMap[formData.serviceCategory].map((sub, sIdx) => (
-                          <option key={sIdx} value={sub}>
-                            {sub}
-                          </option>
-                        ))}
-                    </select>
-                    {errors.subService && <p className="text-rose-500 text-xs font-semibold">{errors.subService}</p>}
-                  </div>
-                </div>
-
-                {/* Message */}
-                <div className="space-y-1.5">
-                  <label htmlFor="message" className="block text-xs font-bold uppercase tracking-wider text-slate-500">
-                    Message
-                  </label>
-                  <textarea
-                    id="message"
-                    name="message"
-                    rows="4"
-                    value={formData.message}
-                    onChange={handleInputChange}
-                    placeholder="Briefly describe your compliance or incorporation requirement..."
-                    className={`w-full bg-white border ${
-                      errors.message ? "border-rose-500 focus:ring-rose-200" : "border-slate-200 focus:ring-brand-blue/20"
-                    } text-brand-dark text-sm rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:border-brand-blue transition-all duration-200 resize-none`}
-                  />
-                  {errors.message && <p className="text-rose-500 text-xs font-semibold">{errors.message}</p>}
-                </div>
-
-                {/* Submit Button */}
-                <div className="pt-2">
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="w-full inline-flex items-center justify-center bg-brand-blue hover:bg-opacity-95 disabled:bg-slate-400 text-white font-bold px-7 py-4 rounded-lg transition-all duration-200 shadow-md hover:scale-[1.01] focus:outline-none focus:ring-2 focus:ring-brand-blue/20 cursor-pointer"
-                  >
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2">
-                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                        </svg>
-                        Requesting Consultation...
-                      </span>
-                    ) : (
-                      "Request Consultation"
-                    )}
-                  </button>
-                </div>
-              </form>
-
-            </div>
-
-          </div>
-        </div>
-      </section>
       
       {/* ─── SECTION 5: Service Assistance Section ───────────────────── */}
       <section className="py-10 md:py-12 bg-white border-b border-slate-100">
